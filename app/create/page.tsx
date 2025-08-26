@@ -1,9 +1,9 @@
-import MyForm from "./createform";
+import CreateForm from "./createform";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100">
-      <MyForm />
+      <CreateForm />
     </main>
   );
 }

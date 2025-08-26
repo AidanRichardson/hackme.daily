@@ -1,14 +1,17 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-export async function POST(req) {
+export async function GET() {
   try {
-    const data = await req.json();
     const filePath = path.resolve("./app//api/data/data.json");
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+
+    const fileContents = await fs.readFile(filePath, "utf8");
+
+    const data = JSON.parse(fileContents);
+
+    return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
-    console.error("Error writing data:", error);
+    console.error("Error reading data.json:", error);
     return new Response(
       JSON.stringify({ success: false, error: error.message }),
       { status: 500 }

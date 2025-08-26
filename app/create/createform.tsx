@@ -58,13 +58,13 @@ export default function CreateForm() {
         >
           Info
         </label>
-        <input
-          type="text"
+        <textarea
           name="Info"
           id="Info"
           value={formData.Info}
           onChange={handleChange}
-          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+          rows={4} // number of visible lines
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none resize-none"
         />
       </div>
 
