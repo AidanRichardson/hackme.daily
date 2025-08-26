@@ -1,0 +1,181 @@
+"use client";
+
+import { ChangeEvent, FormEvent, useState } from "react";
+
+export default function CreateForm() {
+  const [formData, setFormData] = useState({
+    Target: "",
+    Info: "",
+    Username: "",
+    PasswordHint: "",
+    Password: "",
+    SecurityQ: "",
+    SecurityQAnswer: "",
+    TwoFACode: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = await fetch("/api/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    console.log(data);
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-md space-y-4"
+    >
+      <div>
+        <label
+          htmlFor="Target"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Target
+        </label>
+        <input
+          type="text"
+          name="Target"
+          id="Target"
+          value={formData.Target}
+          onChange={handleChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="Info"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Info
+        </label>
+        <input
+          type="text"
+          name="Info"
+          id="Info"
+          value={formData.Info}
+          onChange={handleChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="Username"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Username
+        </label>
+        <input
+          type="text"
+          name="Username"
+          id="Username"
+          value={formData.Username}
+          onChange={handleChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="Password Hint"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Password Hint
+        </label>
+        <input
+          type="text"
+          name="PasswordHint"
+          id="PasswordHint"
+          value={formData.PasswordHint}
+          onChange={handleChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="Password"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Password
+        </label>
+        <input
+          type="text"
+          name="Password"
+          id="Password"
+          value={formData.Password}
+          onChange={handleChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="Security Question"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Security Question
+        </label>
+        <input
+          type="text"
+          name="SecurityQ"
+          id="SecurityQ"
+          value={formData.SecurityQ}
+          onChange={handleChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="Security Question Answer"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Security Question Answer
+        </label>
+        <input
+          type="text"
+          name="SecurityQAnswer"
+          id="SecurityQAnswer"
+          value={formData.SecurityQAnswer}
+          onChange={handleChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="2FA Code"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          2FA Code
+        </label>
+        <input
+          type="text"
+          name="TwoFACode"
+          id="TwoFACode"
+          value={formData.TwoFACode}
+          onChange={handleChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white font-medium py-2 rounded-xl shadow hover:bg-blue-600 transition duration-200"
+      >
+        Submit
+      </button>
+    </form>
+  );
+}
