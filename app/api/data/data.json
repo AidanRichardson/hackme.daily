@@ -1,10 +1,11 @@
 {
-  "Target": "",
-  "Info": "1. Username is ............\n\n2. All capital A's are replaced by 4s answerAll capital A's are replaced by 4s answerAll capital A's are replaced by 4s answerAll capital A's are replaced by 4s answer\n\n3. etc.\n\n4. etc.22",
-  "Username": "",
-  "PasswordHint": "",
-  "Password": "",
-  "SecurityQ": "",
-  "SecurityQAnswer": "",
-  "TwoFACode": ""
+  "Date": "2025-08-27",
+  "Target": "test",
+  "Info": "test",
+  "Username": "test",
+  "PasswordHint": "test",
+  "Password": "test",
+  "SecurityQ": "test",
+  "SecurityQAnswer": "test",
+  "TwoFACode": "test"
 }

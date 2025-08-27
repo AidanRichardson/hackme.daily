@@ -1,9 +1,11 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { GameData } from "../types";
 
 export default function CreateForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<GameData>({
+    Date: "",
     Target: "",
     Info: "",
     Username: "",
@@ -14,8 +16,35 @@ export default function CreateForm() {
     TwoFACode: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const fetchData = async (date: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/${date}`
+      );
+      const gameData: GameData = await res.json();
+      setFormData(gameData);
+    } catch (err) {
+      console.error("Failed to fetch game data:", err);
+    }
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+
+    fetchData(value);
+  };
+
+  useEffect(() => {
+    const date = new Date().toISOString().split("T")[0];
+
+    fetchData(date);
+  }, []);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -34,6 +63,23 @@ export default function CreateForm() {
       onSubmit={handleSubmit}
       className="w-full max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-md space-y-4"
     >
+      <div>
+        <label
+          htmlFor="Date"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Target
+        </label>
+        <input
+          type="date"
+          name="Date"
+          id="Date"
+          value={formData.Date}
+          onChange={handleDateChange}
+          className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none"
+        />
+      </div>
+
       <div>
         <label
           htmlFor="Target"
@@ -63,7 +109,7 @@ export default function CreateForm() {
           id="Info"
           value={formData.Info}
           onChange={handleChange}
-          rows={4} // number of visible lines
+          rows={2}
           className="w-full rounded-xl border border-gray-300 p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none resize-none"
         />
       </div>

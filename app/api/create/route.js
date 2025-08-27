@@ -1,11 +1,46 @@
-import { promises as fs } from "fs";
-import path from "path";
+import db from "@/lib/db";
 
 export async function POST(req) {
   try {
-    const data = await req.json();
-    const filePath = path.resolve("./app//api/data/data.json");
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
+    const {
+      Date,
+      Target,
+      Info,
+      Username,
+      PasswordHint,
+      Password,
+      SecurityQ,
+      SecurityQAnswer,
+      TwoFACode,
+    } = await req.json();
+
+    const stmt = db.prepare(
+      `INSERT INTO Games 
+      (Date, Target, Info, Username, "Password Hint", Password, SecurityQ, SecurityQAnswer, TwoFACode)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(Date) DO UPDATE SET
+        Target = excluded.Target,
+        Info = excluded.Info,
+        Username = excluded.Username,
+        "Password Hint" = excluded."Password Hint",
+        Password = excluded.Password,
+        SecurityQ = excluded.SecurityQ,
+        SecurityQAnswer = excluded.SecurityQAnswer,
+        TwoFACode = excluded.TwoFACode`
+    );
+
+    stmt.run(
+      Date,
+      Target,
+      Info,
+      Username,
+      PasswordHint,
+      Password,
+      SecurityQ,
+      SecurityQAnswer,
+      TwoFACode
+    );
+
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {
     console.error("Error writing data:", error);

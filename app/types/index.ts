@@ -1,4 +1,5 @@
 export interface GameData {
+  Date: string;
   Target: string;
   Info: string;
   PasswordHint: string;

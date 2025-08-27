@@ -15,7 +15,7 @@ export default function GameForm() {
     const fetchGameAnswers = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getgame`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/today`
         );
         const data: GameData = await res.json();
         const gameAnswersData: GameAnswers = {

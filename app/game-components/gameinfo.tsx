@@ -9,7 +9,7 @@ export default function GameInfo() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getgame`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/today`
         );
         const gameData: GameData = await res.json();
         setData(gameData);
