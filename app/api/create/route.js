@@ -16,13 +16,13 @@ export async function POST(req) {
 
     const stmt = db.prepare(
       `INSERT INTO Games 
-      (Date, Target, Info, Username, "Password Hint", Password, SecurityQ, SecurityQAnswer, TwoFACode)
+      (Date, Target, Info, Username, "PasswordHint", Password, SecurityQ, SecurityQAnswer, TwoFACode)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(Date) DO UPDATE SET
         Target = excluded.Target,
         Info = excluded.Info,
         Username = excluded.Username,
-        "Password Hint" = excluded."Password Hint",
+        "PasswordHint" = excluded."PasswordHint",
         Password = excluded.Password,
         SecurityQ = excluded.SecurityQ,
         SecurityQAnswer = excluded.SecurityQAnswer,

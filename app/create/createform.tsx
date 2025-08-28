@@ -19,23 +19,28 @@ export default function CreateForm() {
   const fetchData = async (date: string) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/${date}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/games/${date}`
       );
       const gameData: GameData = await res.json();
-      setFormData(gameData);
+      if (res.ok) {
+        setFormData(gameData);
+      }
     } catch (err) {
       console.error("Failed to fetch game data:", err);
     }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+    const { name, value } = e.target;
 
     fetchData(value);
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   useEffect(() => {
     const date = new Date().toISOString().split("T")[0];
+    setFormData((prev) => ({ ...prev, Date: date }));
 
     fetchData(date);
   }, []);
@@ -68,7 +73,7 @@ export default function CreateForm() {
           htmlFor="Date"
           className="block text-sm font-medium text-gray-700 mb-1"
         >
-          Target
+          Date
         </label>
         <input
           type="date"

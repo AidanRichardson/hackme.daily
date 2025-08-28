@@ -11,6 +11,13 @@ export default function GameForm() {
     TwoFACode: "",
   });
 
+  const [formData, setFormData] = useState<GameAnswers>({
+    Username: "",
+    Password: "",
+    SecurityQAnswer: "",
+    TwoFACode: "",
+  });
+
   useEffect(() => {
     const fetchGameAnswers = async () => {
       try {
@@ -32,13 +39,6 @@ export default function GameForm() {
 
     fetchGameAnswers();
   }, []);
-
-  const [formData, setFormData] = useState<GameAnswers>({
-    Username: "",
-    Password: "",
-    SecurityQAnswer: "",
-    TwoFACode: "",
-  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
