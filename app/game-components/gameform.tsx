@@ -1,7 +1,31 @@
 "use client";
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import type { GameAnswers, GameData } from "../types";
+import type { GameAnswers, GameData, newplayerresponse } from "../types";
+
+async function getOrCreatePlayerId() {
+  let playerId = localStorage.getItem("playerId");
+  if (!playerId) {
+    const res = await fetch("/api/newplayer", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data: newplayerresponse = await res.json();
+    console.log(data);
+    playerId = data.id;
+    localStorage.setItem("playerId", playerId);
+  }
+  return playerId;
+}
+
+async function addAttempt(id: string, date: string) {
+  const res = await fetch(`/api/attempt/${id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ date: date }),
+  });
+  await res.json();
+}
 
 export default function GameForm() {
   const [gameAnswersData, setGameAnswersData] = useState<GameAnswers>({
@@ -14,6 +38,18 @@ export default function GameForm() {
   const [formData, setFormData] = useState<GameAnswers>({
     Username: "",
     Password: "",
+    SecurityQAnswer: "",
+    TwoFACode: "",
+  });
+
+  const [gameData, setGameData] = useState<GameData>({
+    Date: "",
+    Target: "",
+    Info: "",
+    Username: "",
+    PasswordHint: "",
+    Password: "",
+    SecurityQ: "",
     SecurityQAnswer: "",
     TwoFACode: "",
   });
@@ -32,6 +68,7 @@ export default function GameForm() {
           TwoFACode: data.TwoFACode,
         };
         setGameAnswersData(gameAnswersData);
+        setGameData(data);
       } catch (err) {
         console.error("Failed to fetch game data:", err);
       }
@@ -46,13 +83,18 @@ export default function GameForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const playerId = await getOrCreatePlayerId();
+    addAttempt(playerId, gameData.Date);
+
     if (
       gameAnswersData.Username === formData.Username &&
       gameAnswersData.Password === formData.Password &&
       gameAnswersData.SecurityQAnswer === formData.SecurityQAnswer &&
       gameAnswersData.TwoFACode === formData.TwoFACode
     ) {
-      console.log(true);
+      localStorage.setItem(gameData.Date, "Success");
+    } else {
+      localStorage.setItem(gameData.Date, "Failure");
     }
   };
 

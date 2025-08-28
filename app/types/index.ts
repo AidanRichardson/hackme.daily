@@ -16,3 +16,7 @@ export interface GameAnswers {
   SecurityQAnswer: string;
   TwoFACode: string;
 }
+
+export interface newplayerresponse {
+  id: string;
+}
