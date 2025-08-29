@@ -1,12 +1,12 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import type { GameAnswers, GameData, newplayerresponse } from "../types";
 
 async function getOrCreatePlayerId() {
   let playerId = localStorage.getItem("playerId");
   if (!playerId) {
-    const res = await fetch("/api/newplayer", {
+    const res = await fetch("/api/createplayer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
@@ -29,55 +29,17 @@ async function addAttempt(id: string, date: string) {
 
 export default function GameForm({
   setIsSuccess,
+  gameData,
 }: {
   setIsSuccess: (val: boolean) => void;
+  gameData: GameData;
 }) {
-  const [gameAnswersData, setGameAnswersData] = useState<GameAnswers>({
-    Username: "",
-    Password: "",
-    SecurityQAnswer: "",
-    TwoFACode: "",
-  });
-
   const [formData, setFormData] = useState<GameAnswers>({
     Username: "",
     Password: "",
     SecurityQAnswer: "",
     TwoFACode: "",
   });
-
-  const [gameData, setGameData] = useState<GameData>({
-    Date: "",
-    Target: "",
-    Info: "",
-    Username: "",
-    PasswordHint: "",
-    Password: "",
-    SecurityQ: "",
-    SecurityQAnswer: "",
-    TwoFACode: "",
-  });
-
-  useEffect(() => {
-    const fetchGameAnswers = async () => {
-      try {
-        const res = await fetch(`/api/today`);
-        const data: GameData = await res.json();
-        const gameAnswersData: GameAnswers = {
-          Username: data.Username,
-          Password: data.Password,
-          SecurityQAnswer: data.SecurityQAnswer,
-          TwoFACode: data.TwoFACode,
-        };
-        setGameAnswersData(gameAnswersData);
-        setGameData(data);
-      } catch (err) {
-        console.error("Failed to fetch game data:", err);
-      }
-    };
-
-    fetchGameAnswers();
-  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -86,13 +48,13 @@ export default function GameForm({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const playerId = await getOrCreatePlayerId();
-    addAttempt(playerId, gameData.Date);
+    await addAttempt(playerId, gameData.Date);
 
     if (
-      gameAnswersData.Username === formData.Username &&
-      gameAnswersData.Password === formData.Password &&
-      gameAnswersData.SecurityQAnswer === formData.SecurityQAnswer &&
-      gameAnswersData.TwoFACode === formData.TwoFACode
+      gameData.Username === formData.Username &&
+      gameData.Password === formData.Password &&
+      gameData.SecurityQAnswer === formData.SecurityQAnswer &&
+      gameData.TwoFACode === formData.TwoFACode
     ) {
       localStorage.setItem(gameData.Date, "Success");
       setIsSuccess(true);

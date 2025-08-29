@@ -11,27 +11,29 @@ export default function App() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [gameData, setGameData] = useState<GameData | null>(null);
   const [loading, setLoading] = useState(true);
+  const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
-    const fetchGameData = async () => {
+    const fetchGameData = async (date: string) => {
       try {
-        const res = await fetch(`/api/today`);
-        const data: GameData = await res.json();
-        setGameData(data);
-
-        const storedResult = localStorage.getItem(data.Date);
+        const storedResult = localStorage.getItem(date);
         if (storedResult === "Success") {
           setIsSuccess(true);
+          return;
         }
+
+        const res = await fetch(`/api/getgames/${date}`);
+        const data: GameData = await res.json();
+        setGameData(data);
+        setLoading(false);
+        return;
       } catch (err) {
         console.error("Failed to fetch game data:", err);
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchGameData();
-  }, []);
+    fetchGameData(today);
+  }, [today]);
 
   return (
     <>
@@ -66,16 +68,14 @@ export default function App() {
         <MatrixBackground />
 
         <main className="relative z-10 flex flex-col items-center gap-8 p-4 pb-32">
-          {loading ? (
-            <h2 className="text-green-400 text-2xl animate-pulse">
-              Loading...
-            </h2>
-          ) : isSuccess ? (
-            <Success date={"2025-08-29"} />
+          {isSuccess ? (
+            <Success date={today} />
+          ) : loading || !gameData ? (
+            <div></div>
           ) : (
             <>
-              {gameData && <GameInfo />}
-              <GameForm setIsSuccess={setIsSuccess} />
+              <GameInfo gameData={gameData} />
+              <GameForm setIsSuccess={setIsSuccess} gameData={gameData} />
             </>
           )}
         </main>

@@ -2,7 +2,7 @@ import db from "@/lib/db";
 
 export async function GET(req, { params }) {
   try {
-    const { date } = await params;
+    let { date } = await params;
 
     const data = db.prepare("SELECT * FROM Games WHERE Date = ?").all(date);
 

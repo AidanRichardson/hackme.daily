@@ -7,26 +7,21 @@ export default function Success({ date }: { date: string }) {
   const [stats, setStats] = useState<stats>();
 
   useEffect(() => {
-    const fetchGameAnswers = async () => {
+    const fetchStats = async () => {
       try {
         const playerId = localStorage.getItem("playerId");
-        const res = await fetch(`/api/stats/${date}/${playerId}`);
+        const res = await fetch(`/api/getstats/${date}/${playerId}`);
         const data = await res.json();
         setStats(data);
         setLoading(false);
+        return;
       } catch (err) {
         console.error("Failed to fetch game data:", err);
       }
     };
 
-    fetchGameAnswers();
+    fetchStats();
   }, [date]);
-
-  if (loading || !stats) {
-    return (
-      <h2 className="text-green-400 text-2xl animate-pulse">Loading...</h2>
-    );
-  }
 
   return (
     <div className="w-full max-w-2xl p-6 bg-black bg-opacity-75 rounded-lg border border-green-500/50 shadow-[0_0_20px_rgba(0,255,0,0.3)] space-y-4">
@@ -38,19 +33,25 @@ export default function Success({ date }: { date: string }) {
         \\ TODAY&apos;S STATS
       </h1>
 
-      <div className="space-y-2">
-        <h2 className="text-xl text-red-400">
-          - FAILED ATTEMPTS: {stats.failedAttempts}
-        </h2>
-        {/* <h2 className="text-xl text-yellow-400">
-          - TIME TO SOLVE: {stats.timeToSolve}
-        </h2>
-        <h2 className="text-xl text-blue-400">- STREAK: {stats.streak} DAYS</h2>
-        <h2 className="text-xl text-green-300">
-          - BREACH EFFICIENCY: {stats.efficiency}%
-        </h2> */}
-      </div>
-      <AttemptsChart attemptData={stats.attemptData} />
+      {loading || !stats ? (
+        <h2 className="text-green-400 text-2xl animate-pulse">Loading...</h2>
+      ) : (
+        <>
+          <div className="space-y-2">
+            <h2 className="text-xl text-red-400">
+              - FAILED ATTEMPTS: {stats.failedAttempts}
+            </h2>
+            {/* <h2 className="text-xl text-yellow-400">
+      - TIME TO SOLVE: {stats.timeToSolve}
+    </h2>
+    <h2 className="text-xl text-blue-400">- STREAK: {stats.streak} DAYS</h2>
+    <h2 className="text-xl text-green-300">
+      - BREACH EFFICIENCY: {stats.efficiency}%
+    </h2> */}
+          </div>
+          <AttemptsChart attemptData={stats.attemptData} />
+        </>
+      )}
     </div>
   );
 }

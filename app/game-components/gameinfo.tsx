@@ -1,39 +1,11 @@
-"use client";
-import React, { useEffect, useState } from "react";
 import type { GameData } from "../types";
 
-export default function GameInfo() {
-  const [data, setData] = useState<GameData | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`/api/today`);
-        const gameData: GameData = await res.json();
-        setData(gameData);
-      } catch (err) {
-        console.error("Failed to fetch game data:", err);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (!data) {
-    return (
-      <div className="w-full max-w-2xl p-6 bg-black bg-opacity-75 rounded-lg border border-green-500/50 shadow-[0_0_20px_rgba(0,255,0,0.3)] text-center">
-        <h1 className="text-2xl font-bold text-green-400 animate-pulse">
-          --ESTABLISHING CONNECTION--
-        </h1>
-      </div>
-    );
-  }
-
+export default function GameInfo({ gameData }: { gameData: GameData }) {
   const displayData = {
-    "TARGET IDENTIFIED": data.Target,
-    INTEL: data.Info,
-    "PASSWORD HINT": data.PasswordHint,
-    "SECURITY QUESTION": data.SecurityQ,
+    "TARGET IDENTIFIED": gameData.Target,
+    INTEL: gameData.Info,
+    "PASSWORD HINT": gameData.PasswordHint,
+    "SECURITY QUESTION": gameData.SecurityQ,
   };
 
   return (

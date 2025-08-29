@@ -18,9 +18,7 @@ export default function CreateForm() {
 
   const fetchData = async (date: string) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/games/${date}`
-      );
+      const res = await fetch(`/api/getgames/${date}`);
       const gameData: GameData = await res.json();
       if (res.ok) {
         setFormData(gameData);
@@ -54,7 +52,7 @@ export default function CreateForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("/api/create", {
+    const res = await fetch("/api/creategame", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
