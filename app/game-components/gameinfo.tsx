@@ -8,9 +8,7 @@ export default function GameInfo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/today`
-        );
+        const res = await fetch(`/api/today`);
         const gameData: GameData = await res.json();
         setData(gameData);
       } catch (err) {

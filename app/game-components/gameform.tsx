@@ -27,7 +27,11 @@ async function addAttempt(id: string, date: string) {
   await res.json();
 }
 
-export default function GameForm() {
+export default function GameForm({
+  setIsSuccess,
+}: {
+  setIsSuccess: (val: boolean) => void;
+}) {
   const [gameAnswersData, setGameAnswersData] = useState<GameAnswers>({
     Username: "",
     Password: "",
@@ -57,9 +61,7 @@ export default function GameForm() {
   useEffect(() => {
     const fetchGameAnswers = async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/today`
-        );
+        const res = await fetch(`/api/today`);
         const data: GameData = await res.json();
         const gameAnswersData: GameAnswers = {
           Username: data.Username,
@@ -93,6 +95,7 @@ export default function GameForm() {
       gameAnswersData.TwoFACode === formData.TwoFACode
     ) {
       localStorage.setItem(gameData.Date, "Success");
+      setIsSuccess(true);
     } else {
       localStorage.setItem(gameData.Date, "Failure");
     }
