@@ -20,3 +20,18 @@ export interface GameAnswers {
 export interface newplayerresponse {
   id: string;
 }
+
+export interface attemptData {
+  chart: [
+    {
+      attempts: number;
+      players: number;
+    }
+  ];
+  totalPlayers: number;
+  avgAttempts: number;
+}
+export interface stats {
+  failedAttempts: number;
+  attemptData: attemptData;
+}

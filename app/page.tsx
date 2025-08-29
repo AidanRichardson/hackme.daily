@@ -71,7 +71,7 @@ export default function App() {
               Loading...
             </h2>
           ) : isSuccess ? (
-            <Success />
+            <Success date={"2025-08-29"} />
           ) : (
             <>
               {gameData && <GameInfo />}
