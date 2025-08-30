@@ -1,7 +1,11 @@
 import Play from "./play"; // adjust path if needed
 
-export default function PlayWrapper({ params }: { params: { day: string } }) {
-  const { day } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ day: string }>;
+}) {
+  const { day } = await params;
 
   return (
     <Play

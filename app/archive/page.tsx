@@ -18,7 +18,7 @@ export default function Archive() {
       try {
         const res = await fetch(`/api/getgames/`);
         const data: Game[] = await res.json();
-        setAvailableGames(data.slice(0, -1));
+        setAvailableGames(data);
       } catch (err) {
         console.error("Failed to fetch game data:", err);
       } finally {

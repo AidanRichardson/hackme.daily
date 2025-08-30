@@ -1,0 +1,9 @@
+services:
+  nextjs-app:
+    build: .
+    container_name: nextjs-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data # Persist SQLite DB file
+    restart: unless-stopped

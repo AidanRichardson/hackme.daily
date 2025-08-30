@@ -5,13 +5,13 @@ import type { GameAnswers, GameData, newplayerresponse } from "../types";
 
 async function getOrCreatePlayerId() {
   let playerId = localStorage.getItem("playerId");
-  if (!playerId) {
+  const check = await fetch(`/api/checkplayer/${playerId}`);
+  if (!playerId || !check.ok) {
     const res = await fetch("/api/createplayer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
     const data: newplayerresponse = await res.json();
-    console.log(data);
     playerId = data.id;
     localStorage.setItem("playerId", playerId);
   }
@@ -28,11 +28,9 @@ async function addAttempt(id: string, date: string) {
 }
 
 export default function GameForm({
-  success,
   setSuccess,
   gameData,
 }: {
-  success: string;
   setSuccess: (val: string) => void;
   gameData: GameData;
 }) {
@@ -58,11 +56,11 @@ export default function GameForm({
       gameData.SecurityQAnswer === formData.SecurityQAnswer &&
       gameData.TwoFACode === formData.TwoFACode
     ) {
+      localStorage.setItem(gameData.Date, "success");
       setSuccess("success");
     } else {
       setSuccess("failure");
     }
-    localStorage.setItem(gameData.Date, success);
   };
 
   const renderInputField = (
