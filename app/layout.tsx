@@ -1,19 +1,17 @@
-import type { Metadata } from "next";
-
+import NavBar from "./components/navbar";
 import "./globals.css";
-
-export const metadata: Metadata = {
-  title: "Hackme.daily",
-};
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-black text-green-400 font-mono">
+        <NavBar />
+        <main className="pt-20">{children}</main>
+      </body>
     </html>
   );
 }

@@ -28,10 +28,12 @@ async function addAttempt(id: string, date: string) {
 }
 
 export default function GameForm({
-  setIsSuccess,
+  success,
+  setSuccess,
   gameData,
 }: {
-  setIsSuccess: (val: boolean) => void;
+  success: string;
+  setSuccess: (val: string) => void;
   gameData: GameData;
 }) {
   const [formData, setFormData] = useState<GameAnswers>({
@@ -56,11 +58,11 @@ export default function GameForm({
       gameData.SecurityQAnswer === formData.SecurityQAnswer &&
       gameData.TwoFACode === formData.TwoFACode
     ) {
-      localStorage.setItem(gameData.Date, "Success");
-      setIsSuccess(true);
+      setSuccess("success");
     } else {
-      localStorage.setItem(gameData.Date, "Failure");
+      setSuccess("failure");
     }
+    localStorage.setItem(gameData.Date, success);
   };
 
   const renderInputField = (
