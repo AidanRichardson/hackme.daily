@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { GameData } from "../types";
+import { GameData } from "../../types";
 
 export default function CreateForm() {
   const [formData, setFormData] = useState<GameData>({

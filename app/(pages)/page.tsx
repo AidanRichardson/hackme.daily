@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { FaFolder, FaFolderOpen, FaPlay } from "react-icons/fa";
 
 export default function HomePage() {
   const router = useRouter();
@@ -29,18 +30,22 @@ export default function HomePage() {
               FUN!
             </li>
           </ul>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+          <div className="flex justify-center gap-4 mt-6">
             <button
               onClick={handlePlayToday}
-              className="px-6 py-3 rounded-2xl bg-green-500/20 border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition font-bold text-lg"
+              className="px-6 py-3 rounded-2xl flex flex-col items-center w-40 bg-green-500/20 border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition font-bold text-lg"
             >
-              ▶ Play Today
+              <FaPlay className="text-5xl mb-2 drop-shadow-[0_0_10px_rgba(0,255,0,0.6)]" />
+              <span className="text-lg font-semibold">Play</span>
             </button>
+
             <button
               onClick={handleArchive}
-              className="px-6 py-3 rounded-2xl bg-green-500/20 border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition font-bold text-lg"
+              className="px-6 py-3 rounded-2xl flex flex-col items-center w-40 bg-green-500/20 border border-green-400 text-green-400 group hover:bg-green-400 hover:text-black transition font-bold text-lg"
             >
-              📜 Archive
+              <FaFolder className="text-5xl mb-2 drop-shadow-[0_0_10px_rgba(0,255,0,0.6)] group-hover:hidden" />
+              <FaFolderOpen className="text-4xl mb-2 drop-shadow-[0_0_10px_rgba(0,255,0,0.6)] hidden group-hover:flex" />
+              <span className="text-lg font-semibold">Archive</span>
             </button>
           </div>
         </div>

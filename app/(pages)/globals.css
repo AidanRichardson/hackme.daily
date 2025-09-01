@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap");
+@import "tailwindcss";
+
+html,
+body {
+  font-family: "Fira Code", monospace;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.blinking-cursor {
+  position: relative;
+}
+
+.blinking-cursor::after {
+  content: "_";
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: blink 1s step-end infinite;
+  color: #00ff41;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

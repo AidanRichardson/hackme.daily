@@ -1,4 +1,4 @@
-import type { GameData } from "../types";
+import type { GameData } from "../../types";
 
 export default function GameInfo({ gameData }: { gameData: GameData }) {
   const displayData = {

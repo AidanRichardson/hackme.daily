@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import type { GameAnswers, GameData, newplayerresponse } from "../types";
+import type { GameAnswers, GameData, newplayerresponse } from "../../types";
 
 async function getOrCreatePlayerId() {
   let playerId = localStorage.getItem("playerId");

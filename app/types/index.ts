@@ -32,6 +32,6 @@ export interface attemptData {
   avgAttempts: number;
 }
 export interface stats {
-  failedAttempts: number;
+  attempts: number;
   attemptData: attemptData;
 }

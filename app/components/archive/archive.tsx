@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaFolder } from "react-icons/fa";
+import { FaFolder, FaFolderOpen } from "react-icons/fa";
 
 type Game = {
   Date: string;
@@ -34,14 +34,6 @@ export default function Archive() {
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
-
-        body {
-          font-family: 'Fira Code', monospace;
-        }
-      `}</style>
-
       <div className="relative min-h-screen bg-black text-cyan-400">
         <main className="relative z-10 flex flex-col items-center justify-center gap-8 p-4">
           <div className="w-full max-w-5xl p-8 bg-black bg-opacity-70 rounded-2xl border border-cyan-500/50 shadow-[0_0_30px_rgba(0,255,0,0.4)] space-y-6 text-center">
@@ -54,14 +46,15 @@ export default function Archive() {
             ) : availableGames.length === 0 ? (
               <p className="text-xl text-cyan-300">No games found.</p>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mt-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mt-8">
                 {availableGames.map((game) => (
                   <button
                     key={game.Date}
                     onClick={() => handlePlayDay(game.Date)}
-                    className="flex flex-col items-center justify-center p-4 rounded-xl bg-cyan-500/10 border border-cyan-400 shadow-[0_0_15px_rgba(0,255,0,0.2)] hover:bg-cyan-400 hover:text-black transition-all duration-200"
+                    className="flex flex-col items-center p-2 rounded-xl bg-cyan-500/10 border border-cyan-400 group hover:bg-cyan-400 hover:text-black transition-all duration-200"
                   >
-                    <FaFolder className="text-5xl mb-2 drop-shadow-[0_0_10px_rgba(0,255,0,0.6)]" />
+                    <FaFolder className="text-5xl mb-1 group-hover:hidden" />
+                    <FaFolderOpen className="text-5xl mb-1 hidden group-hover:flex" />
                     <span className="text-lg font-semibold">{game.Date}</span>
                   </button>
                 ))}

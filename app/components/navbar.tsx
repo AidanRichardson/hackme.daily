@@ -25,12 +25,10 @@ export default function NavBar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-green-500/50 shadow-[0_0_20px_rgba(0,255,0,0.3)]">
       <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-3">
-        {/* Logo */}
         <h1 className="text-2xl font-bold text-green-400 tracking-widest">
           HACKME.DAILY
         </h1>
 
-        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-4">
           <Link href="/" className={linkClasses("/")}>
             <FaHome /> Home
@@ -43,7 +41,6 @@ export default function NavBar() {
           </Link>
         </div>
 
-        {/* Mobile Hamburger */}
         <button
           className="md:hidden text-green-400"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -52,7 +49,6 @@ export default function NavBar() {
         </button>
       </div>
 
-      {/* Mobile Dropdown Menu */}
       {menuOpen && (
         <div className="md:hidden flex flex-col items-center bg-black border-t border-green-500/50 py-4">
           <Link

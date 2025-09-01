@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import CreateForm from "./createform";
+import CreateForm from "../../components/create/createform";
 
 export default function Page() {
   const [isAuthed, setIsAuthed] = useState(false);

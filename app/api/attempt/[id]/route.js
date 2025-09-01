@@ -6,13 +6,12 @@ export async function POST(req, { params }) {
 
     const { id } = await params;
 
-    const stmt = db.prepare(
-      `INSERT INTO Player_Attempts (player_id, date, attempt_value) VALUES (?, ?, 1)
-      ON CONFLICT(player_id, date) DO UPDATE SET
-        player_id = excluded.player_id,
-        date = excluded.date,
-        attempt_value = excluded.attempt_value + 1`
-    );
+    const stmt = db.prepare(`
+    INSERT INTO Player_Attempts (player_id, date, attempt_value)
+    VALUES (?, ?, 1)
+    ON CONFLICT(player_id, date) DO UPDATE SET
+      attempt_value = attempt_value + 1
+    `);
 
     stmt.run(id, date);
 

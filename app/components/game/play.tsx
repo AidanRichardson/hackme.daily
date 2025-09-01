@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Failure from "../../game-components/failure";
-import GameForm from "../../game-components/gameform";
-import GameInfo from "../../game-components/gameinfo";
-import MatrixBackground from "../../game-components/matrixbackground";
-import Success from "../../game-components/success";
 import { GameData } from "../../types";
+import Failure from "./failure";
+import GameForm from "./gameform";
+import GameInfo from "./gameinfo";
+import MatrixBackground from "./matrixbackground";
+import Success from "./success";
 
 export default function Play({ date }: { date: string }) {
   const [success, setSuccess] = useState("");
@@ -16,8 +16,8 @@ export default function Play({ date }: { date: string }) {
   useEffect(() => {
     const fetchGameData = async (date: string) => {
       try {
-        const storedResult = localStorage.getItem(date);
-        if (storedResult === "success") {
+        const storedIsSuccess = localStorage.getItem(date);
+        if (storedIsSuccess === "success") {
           setSuccess("success");
           setLoading(false);
           return;
@@ -48,33 +48,6 @@ export default function Play({ date }: { date: string }) {
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
-
-        body {
-          font-family: 'Fira Code', monospace;
-        }
-
-        .blinking-cursor {
-          position: relative;
-        }
-
-        .blinking-cursor::after {
-          content: '_';
-          position: absolute;
-          right: 5px;
-          top: 50%;
-          transform: translateY(-50%);
-          animation: blink 1s step-end infinite;
-          color: #00ff41;
-        }
-
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-      `}</style>
-
       <div className="relative min-h-screen bg-black">
         <MatrixBackground />
 
@@ -86,7 +59,7 @@ export default function Play({ date }: { date: string }) {
           ) : gameData === null ? (
             <div className="w-full max-w-2xl p-6 bg-black bg-opacity-75 rounded-lg border border-green-500/50 shadow-[0_0_20px_rgba(0,255,0,0.3)] space-y-4">
               <h1 className="text-2xl font-bold mb-4 text-center text-red-400 animate-pulse">
-                NO GAME TODAY SORRY :(
+                NO GAME TODAY SORRY
               </h1>
             </div>
           ) : (

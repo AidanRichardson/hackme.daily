@@ -7,12 +7,11 @@ import {
   Label,
   LabelList,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
-import type { attemptData } from "../types";
+import type { attemptData } from "../../types";
 
 export default function AttemptsChart({
   attemptData,
@@ -28,7 +27,7 @@ export default function AttemptsChart({
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={attemptData.chart}
-          margin={{ top: 20, right: 30, left: 30, bottom: 40 }} // more space for labels
+          margin={{ top: 20, right: 30, left: 30, bottom: 40 }}
         >
           <XAxis dataKey="attempts" tick={{ fill: "#05df72" }}>
             <Label
@@ -48,15 +47,6 @@ export default function AttemptsChart({
               style={{ textAnchor: "middle" }}
             />
           </YAxis>
-
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "#000",
-              border: "1px solid #05df72",
-              color: "#05df72",
-            }}
-            labelStyle={{ color: "#0f0" }}
-          />
 
           <Bar dataKey="players" fill="#05df72" radius={[4, 4, 0, 0]}>
             <LabelList dataKey="players" position="top" fill="#05df72" />

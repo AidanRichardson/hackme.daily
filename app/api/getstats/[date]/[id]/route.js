@@ -23,13 +23,13 @@ export async function GET(req, { params }) {
       )
       .all(date);
 
-    const failedAttempts = db
+    const attempts = db
       .prepare(
-        `SELECT attempt_value AS failedAttempts FROM Player_Attempts WHERE date=? AND player_id=?`
+        `SELECT attempt_value AS attempts FROM Player_Attempts WHERE date=? AND player_id=?`
       )
       .all(date, id);
 
-    if (attemptsData.length === 0 || failedAttempts.length === 0) {
+    if (attemptsData.length === 0 || attempts.length === 0) {
       return new Response(
         JSON.stringify({ success: false, error: "Not found" }),
         { status: 404 }
@@ -43,7 +43,7 @@ export async function GET(req, { params }) {
     ).toFixed(2);
 
     const data = {
-      failedAttempts: failedAttempts[0].failedAttempts,
+      attempts: attempts[0].attempts,
       attemptData: {
         chart: attemptsData,
         totalPlayers: totalPlayers,

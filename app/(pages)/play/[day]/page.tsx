@@ -1,4 +1,4 @@
-import Play from "./play"; // adjust path if needed
+import Play from "../../../components/game/play"; // adjust path if needed
 
 export default async function Page({
   params,

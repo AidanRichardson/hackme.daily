@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { stats } from "../types";
+import type { stats } from "../../types";
 import AttemptsChart from "./attemptchart";
 
 export default function Success({ date }: { date: string }) {
@@ -39,15 +39,8 @@ export default function Success({ date }: { date: string }) {
         <>
           <div className="space-y-2">
             <h2 className="text-xl text-red-400">
-              - ATTEMPTS: {stats.failedAttempts}
+              - ATTEMPTS: {stats.attempts}
             </h2>
-            {/* <h2 className="text-xl text-yellow-400">
-      - TIME TO SOLVE: {stats.timeToSolve}
-    </h2>
-    <h2 className="text-xl text-blue-400">- STREAK: {stats.streak} DAYS</h2>
-    <h2 className="text-xl text-green-300">
-      - BREACH EFFICIENCY: {stats.efficiency}%
-    </h2> */}
           </div>
           <AttemptsChart attemptData={stats.attemptData} />
         </>
