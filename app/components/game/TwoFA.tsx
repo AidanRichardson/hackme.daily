@@ -3,7 +3,7 @@ import { GameData } from "@/app/types";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import Failure from "./failure";
 
-export default function SecurityQuestion({
+export default function TwoFA({
   gameData,
   setCurrentScreen,
 }: {
@@ -11,7 +11,7 @@ export default function SecurityQuestion({
   setCurrentScreen: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [formData, setFormData] = useState({
-    SecurityQAnswer: "",
+    TwoFACode: "",
   });
   const [success, setSuccess] = useState("");
 
@@ -21,8 +21,9 @@ export default function SecurityQuestion({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (gameData.SecurityQAnswer === formData.SecurityQAnswer) {
-      setCurrentScreen("twofa");
+    if (gameData.TwoFACode === formData.TwoFACode) {
+      localStorage.setItem(gameData.Date, "success");
+      setCurrentScreen("success");
     } else {
       const playerId = await getOrCreatePlayerId();
       await addAttempt(playerId, gameData.Date);
@@ -41,28 +42,28 @@ export default function SecurityQuestion({
         </h2>
         <div className="space-y-3">
           <div
-            key="SecurityQ"
+            key="TwoFACode"
             className="flex flex-col sm:flex-row justify-between p-3 bg-gray-900/50 rounded-md border-l-4 border-green-500"
           >
-            <span className="font-medium text-green-400">{`> SECURITY QUESTION`}</span>
+            <span className="font-medium text-green-400">{`> INTEL`}</span>
             <span className="text-gray-300 text-right mt-1 sm:mt-0 whitespace-pre-wrap">
-              {gameData.SecurityQ}
+              {gameData.Info}
             </span>
           </div>
         </div>
         <div>
           <label
-            htmlFor="SecurityQAnswer"
+            htmlFor="TwoFACode"
             className="block text-sm font-medium text-green-400 mb-2"
           >
-            Answer
+            2FA Code
           </label>
           <div>
             <input
               type="text"
-              name="SecurityQAnswer"
-              id="SecurityQAnswer"
-              value={formData.SecurityQAnswer}
+              name="TwoFACode"
+              id="TwoFACode"
+              value={formData.TwoFACode}
               onChange={handleChange}
               autoComplete="off"
               className="w-full bg-gray-900/50 text-green-300 rounded-md border border-green-500/30 p-2 focus:border-green-400 focus:ring focus:ring-green-500/50 outline-none transition duration-200"

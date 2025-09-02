@@ -2,21 +2,23 @@
 
 import { addAttempt, getOrCreatePlayerId } from "@/app/services";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import type { GameData } from "../../types";
+import Failure from "./failure";
 
 export default function UserPass({
   gameData,
   setCurrentScreen,
-  setSuccess,
 }: {
   gameData: GameData;
   setCurrentScreen: React.Dispatch<React.SetStateAction<string>>;
-  setSuccess: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [formData, setFormData] = useState({
     Username: "",
     Password: "",
   });
+  const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [showHint, setShowHint] = useState(false);
 
@@ -30,7 +32,7 @@ export default function UserPass({
       gameData.Username === formData.Username &&
       gameData.Password === formData.Password
     ) {
-      setCurrentScreen("securityQ");
+      setCurrentScreen("securityq");
     } else {
       const playerId = await getOrCreatePlayerId();
       await addAttempt(playerId, gameData.Date);
@@ -83,7 +85,7 @@ export default function UserPass({
           >
             Username
           </label>
-          <div className="blinking-cursor">
+          <div>
             <input
               type="text"
               name="Username"
@@ -102,16 +104,23 @@ export default function UserPass({
           >
             Password
           </label>
-          <div className="blinking-cursor">
+          <div className="relative">
             <input
-              type="text"
+              type={showPassword ? "text" : "password"}
               name="Password"
               id="Password"
               value={formData.Password}
               onChange={handleChange}
               autoComplete="off"
-              className="w-full bg-gray-900/50 text-green-300 rounded-md border border-green-500/30 p-2 focus:border-green-400 focus:ring focus:ring-green-500/50 outline-none transition duration-200"
+              className="w-full bg-gray-900/50 text-green-300 rounded-md border border-green-500/30 p-2 focus:border-green-400 focus:ring focus:ring-green-500/50 outline-none transition duration-200 pr-10"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-2 flex items-center text-green-400 hover:text-green-200 transition"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
         </div>
         {showHint ? (
@@ -139,6 +148,8 @@ export default function UserPass({
           [ EXECUTE ]
         </button>
       </form>
+
+      {success === "failure" && <Failure setSuccess={setSuccess} />}
     </>
   );
 }
