@@ -4,7 +4,7 @@ import { addAttempt, getOrCreatePlayerId } from "@/app/services";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import type { GameData } from "../../types";
-import Failure from "./failure";
+import Failure from "./Failure";
 
 export default function UserPass({
   gameData,

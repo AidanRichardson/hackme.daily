@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { stats } from "../../types";
-import AttemptsChart from "./attemptchart";
+import AttemptsChart from "./AttemptChart";
 
 export default function Success({ date }: { date: string }) {
   const [loading, setLoading] = useState(true);

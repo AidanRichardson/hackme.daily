@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { GameData } from "../../types";
 import MainGame from "./MainGame";
-import MatrixBackground from "./matrixbackground";
+import MatrixBackground from "./MatrixBackground";
 
 export default function Play({ date }: { date: string }) {
   const [gameData, setGameData] = useState<GameData | null>(null);

@@ -1,9 +1,9 @@
 import { GameData } from "@/app/types";
 import React, { useEffect, useState } from "react";
 import SecurityQuestion from "./SecurityQuestion";
+import Success from "./Success";
 import TwoFA from "./TwoFA";
 import UserPass from "./UserPass";
-import Success from "./success";
 
 export default function MainGame({ gameData }: { gameData: GameData }) {
   const [currentScreen, setCurrentScreen] = useState("userpass");

@@ -1,7 +1,7 @@
 import { addAttempt, getOrCreatePlayerId } from "@/app/services";
 import { GameData } from "@/app/types";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import Failure from "./failure";
+import Failure from "./Failure";
 
 export default function TwoFA({
   gameData,
