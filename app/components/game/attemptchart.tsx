@@ -31,7 +31,7 @@ export default function AttemptsChart({
         >
           <XAxis dataKey="attempts" tick={{ fill: "#05df72" }}>
             <Label
-              value="Number of Attempts"
+              value="Failed Logins"
               offset={-5}
               position="insideBottom"
               fill="#05df72"
@@ -55,7 +55,7 @@ export default function AttemptsChart({
       </ResponsiveContainer>
 
       <div className="flex justify-between text-yellow-700 text-lg font-semibold">
-        <span>Average Attempts: {attemptData.avgAttempts}</span>
+        <span>Average Failed Logins: {attemptData.avgAttempts}</span>
         <span>Total Players: {attemptData.totalPlayers}</span>
       </div>
     </div>

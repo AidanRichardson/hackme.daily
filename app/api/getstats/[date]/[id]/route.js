@@ -12,9 +12,7 @@ export async function GET(req, { params }) {
         COUNT(DISTINCT player_id) AS players
       FROM
         Player_Attempts
-      WHERE
-        attempt_value <= 5
-        AND date = ?
+      WHERE date = ?
       GROUP BY
           attempt_value
       ORDER BY

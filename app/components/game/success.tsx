@@ -39,7 +39,7 @@ export default function Success({ date }: { date: string }) {
         <>
           <div className="space-y-2">
             <h2 className="text-xl text-red-400">
-              - ATTEMPTS: {stats.attempts}
+              - FAILED LOGINS: {stats.attempts}
             </h2>
           </div>
           <AttemptsChart attemptData={stats.attemptData} />

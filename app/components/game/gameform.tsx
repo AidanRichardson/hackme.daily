@@ -1,31 +1,8 @@
 "use client";
 
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import type { GameAnswers, GameData, newplayerresponse } from "../../types";
-
-async function getOrCreatePlayerId() {
-  let playerId = localStorage.getItem("playerId");
-  const check = await fetch(`/api/checkplayer/${playerId}`);
-  if (!playerId || !check.ok) {
-    const res = await fetch("/api/createplayer", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-    const data: newplayerresponse = await res.json();
-    playerId = data.id;
-    localStorage.setItem("playerId", playerId);
-  }
-  return playerId;
-}
-
-async function addAttempt(id: string, date: string) {
-  const res = await fetch(`/api/attempt/${id}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ date: date }),
-  });
-  await res.json();
-}
+import { addAttempt, getOrCreatePlayerId } from "../../services";
+import type { GameAnswers, GameData } from "../../types";
 
 export default function GameForm({
   setSuccess,
