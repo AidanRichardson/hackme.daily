@@ -5,8 +5,10 @@ import { GameData } from "../../types";
 import Failure from "./failure";
 import GameForm from "./gameform";
 import GameInfo from "./gameinfo";
+import MainGame from "./MainGame";
 import MatrixBackground from "./matrixbackground";
 import Success from "./success";
+import UserPass from "./userpass";
 
 export default function Play({ date }: { date: string }) {
   const [success, setSuccess] = useState("");
@@ -64,8 +66,7 @@ export default function Play({ date }: { date: string }) {
             </div>
           ) : (
             <>
-              <GameInfo gameData={gameData} />
-              <GameForm setSuccess={setSuccess} gameData={gameData} />
+              <MainGame setSuccess={setSuccess} gameData={gameData} />
             </>
           )}
 
