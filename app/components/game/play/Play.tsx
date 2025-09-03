@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GameData } from "../../types";
-import MainGame from "./MainGame";
-import MatrixBackground from "./MatrixBackground";
+import { GameData } from "../../../types";
+import MatrixBackground from "../MatrixBackground";
+import Forms from "./Forms";
 
 export default function Play({ date }: { date: string }) {
   const [gameData, setGameData] = useState<GameData | null>(null);
@@ -17,10 +17,11 @@ export default function Play({ date }: { date: string }) {
           throw new Error(`HTTP error: ${res.status}`);
         }
 
-        const data: GameData | null = await res.json();
+        const data = await res.json();
         if (!data || Object.keys(data).length === 0) {
           setGameData(null);
         } else {
+          data.TwoFACode = Number(data.TwoFACode);
           setGameData(data);
         }
 
@@ -51,7 +52,7 @@ export default function Play({ date }: { date: string }) {
             </div>
           ) : (
             <>
-              <MainGame gameData={gameData} />
+              <Forms gameData={gameData} />
             </>
           )}
         </main>

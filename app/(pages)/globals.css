@@ -26,3 +26,13 @@ body {
 .animate-pulse-border {
   animation: pulseBorder 2s infinite;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}

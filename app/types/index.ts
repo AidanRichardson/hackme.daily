@@ -7,7 +7,7 @@ export interface GameData {
   Username: string;
   Password: string;
   SecurityQAnswer: string;
-  TwoFACode: string;
+  TwoFACode: number;
 }
 
 export interface GameAnswers {
@@ -32,6 +32,17 @@ export interface attemptData {
   avgAttempts: number;
 }
 export interface stats {
-  attempts: number;
+  attempts: {
+    userpass: number;
+    securityq: number;
+    twofa: number;
+    total: number;
+  };
   attemptData: attemptData;
+}
+
+export type Screens = "userpass" | "securityq" | "twofa" | "success";
+export interface storedData {
+  screen: Screens;
+  attempts: number;
 }

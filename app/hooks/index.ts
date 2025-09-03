@@ -15,11 +15,20 @@ export async function getOrCreatePlayerId() {
   return playerId;
 }
 
-export async function addAttempt(id: string, date: string) {
+export async function postAttempts(
+  id: string,
+  date: string,
+  section: string,
+  attempts: number
+) {
   const res = await fetch(`/api/attempt/${id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ date: date }),
+    body: JSON.stringify({
+      date: date,
+      section: section + "_attempts",
+      attempts: attempts,
+    }),
   });
   await res.json();
 }

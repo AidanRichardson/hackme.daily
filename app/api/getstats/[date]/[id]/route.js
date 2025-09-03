@@ -8,22 +8,22 @@ export async function GET(req, { params }) {
       .prepare(
         `
       SELECT
-        attempt_value AS attempts,
+        userpass_attempts+securityq_attempts+twofa_attempts AS attempts,
         COUNT(DISTINCT player_id) AS players
       FROM
         Player_Attempts
       WHERE date = ?
       GROUP BY
-          attempt_value
+          attempts
       ORDER BY
-          attempt_value;
+          attempts;
       `
       )
       .all(date);
 
     const attempts = db
       .prepare(
-        `SELECT attempt_value AS attempts FROM Player_Attempts WHERE date=? AND player_id=?`
+        `SELECT userpass_attempts AS userpass, securityq_attempts AS securityq, twofa_attempts AS twofa, userpass_attempts+securityq_attempts+twofa_attempts AS total FROM Player_Attempts WHERE date = ? AND player_id=?`
       )
       .all(date, id);
 
@@ -41,7 +41,12 @@ export async function GET(req, { params }) {
     ).toFixed(2);
 
     const data = {
-      attempts: attempts[0].attempts,
+      attempts: {
+        userpass: attempts[0].userpass,
+        securityq: attempts[0].securityq,
+        twofa: attempts[0].twofa,
+        total: attempts[0].total,
+      },
       attemptData: {
         chart: attemptsData,
         totalPlayers: totalPlayers,

@@ -2,18 +2,27 @@ import db from "@/lib/db";
 
 export async function POST(req, { params }) {
   try {
-    const { date } = await req.json();
+    const { date, section, attempts } = await req.json();
 
     const { id } = await params;
 
-    const stmt = db.prepare(`
-    INSERT INTO Player_Attempts (player_id, date, attempt_value)
-    VALUES (?, ?, 1)
-    ON CONFLICT(player_id, date) DO UPDATE SET
-      attempt_value = attempt_value + 1
-    `);
+    if (
+      !["userpass_attempts", "securityq_attempts", "twofa_attempts"].includes(
+        section
+      )
+    ) {
+      throw new Error("Invalid section column");
+    }
 
-    stmt.run(id, date);
+    const sql = `
+    INSERT INTO Player_Attempts (player_id, date, ${section})
+    VALUES (?, ?, ?)
+    ON CONFLICT(player_id, date) DO UPDATE SET
+      ${section} = ${section} + excluded.${section};
+  `;
+
+    const stmt = db.prepare(sql);
+    stmt.run(id, date, attempts);
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {

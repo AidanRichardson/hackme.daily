@@ -13,7 +13,7 @@ export default function CreateForm() {
     Password: "",
     SecurityQ: "",
     SecurityQAnswer: "",
-    TwoFACode: "",
+    TwoFACode: 0,
   });
 
   const fetchData = async (date: string) => {

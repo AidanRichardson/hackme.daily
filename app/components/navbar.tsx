@@ -6,6 +6,7 @@ import { useState } from "react";
 import {
   FaBars,
   FaCalendarDay,
+  FaFolder,
   FaFolderOpen,
   FaHome,
   FaTimes,
@@ -25,9 +26,11 @@ export default function NavBar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-green-500/50 shadow-[0_0_20px_rgba(0,255,0,0.3)]">
       <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-3">
-        <h1 className="text-2xl font-bold text-green-400 tracking-widest">
-          HACKME.DAILY
-        </h1>
+        <Link href="/">
+          <h1 className="text-2xl font-bold text-green-400 tracking-widest">
+            HACKME.DAILY
+          </h1>
+        </Link>
 
         <div className="hidden md:flex items-center gap-4">
           <Link href="/" className={linkClasses("/")}>
@@ -36,8 +39,10 @@ export default function NavBar() {
           <Link href="/play/today" className={linkClasses("/play/today")}>
             <FaCalendarDay /> Today
           </Link>
-          <Link href="/archive" className={linkClasses("/archive")}>
-            <FaFolderOpen /> Archive
+          <Link href="/archive" className={linkClasses("/archive") + " group"}>
+            <FaFolder className="group-hover:hidden" />
+            <FaFolderOpen className="hidden group-hover:flex" />
+            <span>Archive</span>
           </Link>
         </div>
 
