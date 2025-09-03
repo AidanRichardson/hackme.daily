@@ -31,7 +31,7 @@ export default function AttemptsChart({
       }
     });
 
-    if (over9Players >= 0) {
+    if (over9Players > 0) {
       grouped.push({ attempts: ">9", players: over9Players });
     }
 

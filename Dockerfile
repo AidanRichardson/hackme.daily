@@ -1,4 +1,7 @@
-FROM node:22-alpine AS builder
+# --------------------
+# 1. Builder Image
+# --------------------
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -9,22 +12,26 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build the Next.js app
+# Build Next.js (TS compilation + Tailwind processing)
 RUN npm run build
 
-# Production image
-FROM node:22-alpine AS runner
+# --------------------
+# 2. Runner Image
+# --------------------
+FROM node:20-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV=production
-
+# Copy only production files
 COPY --from=builder /app/package*.json ./
+RUN npm install --omit=dev
+
+COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/next.config.ts ./
 COPY --from=builder /app/postcss.config.mjs ./
 COPY --from=builder /app/tsconfig.json ./
-COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/lib ./lib
 
-EXPOSE 3000 
+ENV NODE_ENV=production
+EXPOSE 3000
 
 CMD ["npm", "start"]
