@@ -12,7 +12,7 @@ export async function GET(req, { params }) {
         COUNT(DISTINCT player_id) AS players
       FROM
         Player_Attempts
-      WHERE date = ?
+      WHERE date = ? AND attempts NOT NULL
       GROUP BY
           attempts
       ORDER BY

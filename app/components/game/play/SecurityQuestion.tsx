@@ -31,7 +31,7 @@ export default function SecurityQuestion({
     if (
       gameData.SecurityQAnswer.toLowerCase() === SecurityQAnswer.toLowerCase()
     ) {
-      await postAttempts(playerId, gameData.Date, "twofa", pageAttempts);
+      await postAttempts(playerId, gameData.Date, "securityq", pageAttempts);
       localStorage.setItem(
         gameData.Date,
         JSON.stringify({ screen: "twofa", attempts: 0 })

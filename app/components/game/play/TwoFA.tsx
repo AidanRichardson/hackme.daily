@@ -29,7 +29,7 @@ export default function TwoFA({
     const playerId = await getOrCreatePlayerId();
 
     if (gameData.TwoFACode == twofa) {
-      await postAttempts(playerId, gameData.Date, "userpass", pageAttempts);
+      await postAttempts(playerId, gameData.Date, "twofa", pageAttempts);
       localStorage.setItem(
         gameData.Date,
         JSON.stringify({ screen: "success", attempts: 0 })

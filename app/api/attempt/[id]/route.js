@@ -15,11 +15,11 @@ export async function POST(req, { params }) {
     }
 
     const sql = `
-    INSERT INTO Player_Attempts (player_id, date, ${section})
-    VALUES (?, ?, ?)
-    ON CONFLICT(player_id, date) DO UPDATE SET
-      ${section} = ${section} + excluded.${section};
-  `;
+  INSERT INTO Player_Attempts (player_id, date, ${section})
+  VALUES (?, ?, ?)
+  ON CONFLICT(player_id, date) DO UPDATE SET
+    ${section} = COALESCE(${section}, 0) + excluded.${section};
+`;
 
     const stmt = db.prepare(sql);
     stmt.run(id, date, attempts);
