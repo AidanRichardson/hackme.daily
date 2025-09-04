@@ -29,7 +29,7 @@ export default function HomePage() {
               Hints and skips will appear after failed logins, use these if you
               get stuck to help you move onto the next section
             </li>
-            <li className="font-bold text-blue-600">
+            <li className="font-bold">
               It&apos;s a test of knowledge and problem-solving. HAVE FUN!
             </li>
           </ul>
