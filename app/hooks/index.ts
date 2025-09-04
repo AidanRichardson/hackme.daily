@@ -1,15 +1,13 @@
 import { newplayerresponse } from "../types";
 
-export async function getOrCreatePlayerId() {
-  let playerId = localStorage.getItem("playerId");
+export async function getOrCreatePlayerId(): Promise<string | null> {
+  let playerId: string | null = localStorage.getItem("playerId");
 
   try {
     let checkOk = false;
 
     if (playerId) {
-      const check = await fetch(`/api/checkplayer/${playerId}`, {
-        method: "GET",
-      });
+      const check = await fetch(`/api/checkplayer/${playerId}`);
       if (check.status === 200) {
         checkOk = true;
       }
@@ -20,19 +18,25 @@ export async function getOrCreatePlayerId() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
+
+      if (!res.ok) {
+        throw new Error("Failed to create player");
+      }
+
       const data: newplayerresponse = await res.json();
       playerId = data.id;
       localStorage.setItem("playerId", playerId);
     }
   } catch (err) {
     console.error("Network error:", err);
+    playerId = null;
   }
 
   return playerId;
 }
 
 export async function postAttempts(
-  id: string,
+  id: string | null,
   date: string,
   section: string,
   attempts: number
