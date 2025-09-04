@@ -1,5 +1,5 @@
+import type { stats } from "@/app/types";
 import { useEffect, useState } from "react";
-import type { stats } from "../../../types";
 import AttemptsChart from "./AttemptChart";
 
 export default function Success({ date }: { date: string }) {

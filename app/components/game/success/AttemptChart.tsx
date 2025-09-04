@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 
-import type { attemptData } from "../../../types";
+import type { attemptData } from "@/app/types";
 
 export default function AttemptsChart({
   attemptData,

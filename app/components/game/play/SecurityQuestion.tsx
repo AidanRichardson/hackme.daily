@@ -1,6 +1,6 @@
 import { getOrCreatePlayerId, postAttempts } from "@/app/hooks";
+import type { GameData, Screens, storedData } from "@/app/types";
 import React, { FormEvent, useEffect, useState } from "react";
-import type { GameData, Screens, storedData } from "../../../types";
 import Failure from "../Failure";
 import Intel from "./Intel";
 import SubmitButton from "./SubmitButton";

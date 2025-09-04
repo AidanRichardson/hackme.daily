@@ -1,4 +1,4 @@
-import { newplayerresponse } from "../types";
+import { newplayerresponse } from "@/app/types";
 
 export async function getOrCreatePlayerId(): Promise<string | null> {
   let playerId: string | null = localStorage.getItem("playerId");

@@ -1,7 +1,7 @@
 "use client";
 
+import { GameData } from "@/app/types";
 import { useEffect, useState } from "react";
-import { GameData } from "../../../types";
 import MatrixBackground from "../MatrixBackground";
 import Forms from "./Forms";
 

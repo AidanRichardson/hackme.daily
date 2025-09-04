@@ -1,5 +1,5 @@
+import type { GameData } from "@/app/types";
 import React from "react";
-import type { GameData } from "../../../types";
 
 export default function Intel({ gameData }: { gameData: GameData }) {
   return (

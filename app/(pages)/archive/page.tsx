@@ -1,4 +1,4 @@
-import Archive from "../../components/archive/archive";
+import Archive from "@/app/components/archive/archive";
 
 export default function page() {
   return (
