@@ -1,9 +1,11 @@
 services:
-  nextjs-app:
+  hackme.daily:
     build: .
-    container_name: nextjs-app
+    container_name: hackme.daily
     ports:
       - "3000:3000"
     volumes:
-      - ./data:/app/data # Persist SQLite DB file
+      - ./data:/app/data
+    environment:
+      - ADMIN_PASSWORD=supersecretpassword
     restart: unless-stopped
